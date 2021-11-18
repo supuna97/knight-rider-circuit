@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="images/kit.jpg" />
+    <title>Knight Rider Circuit</title>
+    <style>
+        div#mainqueue aside {
+            width: 80px;
+            height: 40px;
+            background-color: black;
+            margin: 5px;
+            display: inline-block;
+            border-radius: 5px;
+            transition: 0.1s;
+        }
+    </style>
+</head>
+
+<body style="background-color: black;">
+
+    <div id="mainqueue" style="text-align: center;height: 200px;max-width: 750px;position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <audio src="audios/Knight%20Rider%20Scanner.mp3" controls loop autoplay style="display: none"></audio>
+        <hr>
+        <div id="lights" style="min-width: 750px; display: inline-block; text-align: left;">
+
+            <aside></aside>
+            <aside></aside>
+            <aside></aside>
+            <aside></aside>
+            <aside></aside>
+            <aside></aside>
+            <aside></aside>
+            <aside></aside>
+        </div>
+        <hr>
+    </div>
+
+    <script type="application/javascript" src="js/jquery-3.3.1.min.js"></script>
+
+    <script type="application/javascript" src="js/bootstrap.min.js"></script>
+
+    <script>
+        var leftside = ['rgba(255,0,0,0.4)', 'rgba(255,0,0,0.7)', 'rgba(255,0,0,1)', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black'];
+
+
+        function Rightstart() {
+            var a = 0;
+
+            function setColorsRight() {
+                for (var j = 2; j < 10; j++) {
+                    $('div#lights aside:nth-child(' + (j - 1) + ')').css('background-color', leftside[j]);
+                }
+            }
+            startcolors();
+
+            function startcolors() {
+                if (a++ <= 10) {
+                    setColorsRight();
+                    var lastCol = leftside.pop();
+                    leftside.unshift(lastCol);
+                    setTimeout(startcolors, 100);
+                }
+                if (a == 12) {
+                    Leftstart();
+                }
+            }
+        }
+
+        var rightside = ['black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'rgba(255,0,0,1)', 'rgba(255,0,0,0.7)', 'rgba(255,0,0,0.4)'];
+
+        function Leftstart() {
+            var b = 0;
+
+            function setColorsLeft() {
+                for (var j = 0; j < 9; j++) {
+                    $('div#lights aside:nth-child(' + (j + 1) + ')').css('background-color', rightside[j + 1]);
+                }
+            }
+            startcolors();
+
+            function startcolors() {
+                if (b++ <= 10) {
+                    setColorsLeft();
+                    var firstCol = rightside.shift();
+                    rightside.push(firstCol);
+                    setTimeout(startcolors, 100);
+                }
+                if (b == 12) {
+                    a = 0;
+                    b = 0;
+                    Rightstart();
+                }
+            }
+        }
+
+        Rightstart();
+    </script>
+</body>
+
+</html>
